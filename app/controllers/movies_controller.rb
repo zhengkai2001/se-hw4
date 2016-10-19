@@ -11,7 +11,14 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @sort = params[:sort_by]
+
+    if @sort == 'title' || @sort == 'release_date'
+      @movies = Movie.all.order(@sort)
+      eval("@sort_by_" + @sort + " = 'hilite'")
+    else
+      @movies = Movie.all
+    end
   end
 
   def new
