@@ -18,18 +18,18 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
 
-    sort = params[:sort_by]
     ratings = params[:ratings]
-
-    if sort == 'title' || sort == 'release_date'
-      @movies = @movies.order(sort)
-      eval('@sort_by_' + sort + " = 'hilite'")
-    elsif ratings
+    if ratings
       ratings = ratings.keys
       @movies = @movies.where(rating: ratings)
       @all_ratings.each do |rating|
         @rating_selected[rating] = ratings.include? rating
       end
+    end
+
+    sort = params[:sort_by]
+    if sort == 'title' || sort == 'release_date'
+      @movies = @movies.order(sort)
     end
   end
 
