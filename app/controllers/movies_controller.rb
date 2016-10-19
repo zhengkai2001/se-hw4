@@ -35,7 +35,7 @@ class MoviesController < ApplicationController
     end
 
     if ratings
-      @movies = @movies.where!(rating: ratings)
+      @movies.where!(rating: ratings)
       @all_ratings.each do |rating|
         @rating_selected[rating] = ratings.include? rating
       end
