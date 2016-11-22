@@ -1,5 +1,5 @@
 class CreateMovies < ActiveRecord::Migration
-  def change
+  def up
     create_table :movies do |t|
       t.string :title
       t.string :rating
@@ -7,7 +7,11 @@ class CreateMovies < ActiveRecord::Migration
       t.datetime :release_date
       # Add fields that let Rails automatically keep track
       # of when movies are added or modified:
-      t.timestamps
+      t.timestamps null: false
     end
+  end
+
+  def down
+    drop_table :movies
   end
 end
