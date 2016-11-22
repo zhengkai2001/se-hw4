@@ -56,7 +56,7 @@ RSpec.describe MoviesController, type: :controller do
 
         post :create, :movie => {
             :title => 'Raiders of the Lost Ark', :director => 'George Lucas',
-            :rating => 'PG', :release_date => '1987/12/11'}
+            :rating => 'PG', :release_date => '1981-06-12'}
 
         get :index
         expect(response.body).to match(/Raiders of the Lost Ark/)
@@ -94,9 +94,9 @@ RSpec.describe MoviesController, type: :controller do
   describe 'Find movies with same director' do
     context 'the specified movie has director information' do
       it 'should find movies with same director' do
-        get :same_director, :director => 'George Lucas'
+        get :director_all_movies, :director => 'George Lucas'
 
-        expect(response).to render_template(:same_director)
+        expect(response).to render_template(:director_all_movies)
         expect(response.status).to eq(200)
 
         expect(response.body).to match(/Star Wars/)
@@ -108,9 +108,9 @@ RSpec.describe MoviesController, type: :controller do
 
     context 'the specified movie has no director information' do
       it 'should not find any movies' do
-        get :same_director, :director => nil
+        get :director_all_movies, :director => nil
 
-        expect(response).to render_template(:same_director)
+        expect(response).to render_template(:director_all_movies)
         expect(response.status).to eq(200)
 
         expect(response.body).to match(/Please enter a valid director./)

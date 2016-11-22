@@ -43,6 +43,21 @@ class MoviesController < ApplicationController
     end
   end
 
+  def sort
+    if params[:sort_by]
+      sort_by = params[:sort_by]
+    elsif session[:sort_by]
+      sort_by = session[:sort_by]
+    else
+      sort_by = nil
+    end
+
+    if self.class.sortable_attributes.include?(sort_by)
+      @movies.order!(sort_by)
+      session[:sort_by] = sort_by
+    end
+  end
+
   def new
     # default: render 'new' template
   end
@@ -72,13 +87,15 @@ class MoviesController < ApplicationController
   end
 
   # add in hw4
-  def same_director
+  def director_all_movies
     if params[:director]
       @director = params[:director]
       @movies = Movie.find_by_director(@director)
       sort
+      @title = @director
     else
       @director = nil
+      @title = 'Not Found'
     end
 
     if params[:from]
@@ -86,21 +103,6 @@ class MoviesController < ApplicationController
       @from_movie = Movie.find(@from_movie_id)
     else
       @from_movie_id = nil
-    end
-  end
-
-  def sort
-    if params[:sort_by]
-      sort_by = params[:sort_by]
-    elsif session[:sort_by]
-      sort_by = session[:sort_by]
-    else
-      sort_by = nil
-    end
-
-    if self.class.sortable_attributes.include?(sort_by)
-      @movies.order!(sort_by)
-      session[:sort_by] = sort_by
     end
   end
 end

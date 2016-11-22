@@ -1,5 +1,7 @@
 -# in app/views/movies/show.html.haml
 
+= content_for(:title, @movie.title + ' - Rotten Potatoes!')
+
 %h2 Details about #{@movie.title}
 
 %ul#details
