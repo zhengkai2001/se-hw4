@@ -19,6 +19,3 @@ log
 
 #Ignore RubyMine configuration files.
 /.idea
-
-#Ignore simplecov coverage result files.
-/coverage

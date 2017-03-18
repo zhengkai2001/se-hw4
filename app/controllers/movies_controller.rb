@@ -88,8 +88,9 @@ class MoviesController < ApplicationController
 
   # add in hw4
   def director_all_movies
-    if params[:director]
-      @director = params[:director]
+    param_director = params[:director].to_s
+    if not param_director.empty?
+      @director = param_director
       @movies = Movie.find_by_director(@director)
       sort
       @title = @director
@@ -98,8 +99,9 @@ class MoviesController < ApplicationController
       @title = 'Not Found'
     end
 
-    if params[:from]
-      @from_movie_id = params[:from]
+    param_from = params[:from].to_s
+    if not param_from.empty?
+      @from_movie_id = param_from
       @from_movie = Movie.find(@from_movie_id)
     else
       @from_movie_id = nil

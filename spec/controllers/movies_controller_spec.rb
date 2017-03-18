@@ -37,7 +37,7 @@ RSpec.describe MoviesController, type: :controller do
 
     context 'visit the details page of a movie' do
       it 'should display the details page of a movie' do
-        get :show, :id => 1
+        get :show, params: {id: 1}
 
         expect(response).to render_template(:show)
         expect(response.status).to eq(200)
@@ -54,9 +54,9 @@ RSpec.describe MoviesController, type: :controller do
         get :index
         expect(response.body).not_to match(/Raiders of the Lost Ark/)
 
-        post :create, :movie => {
-            :title => 'Raiders of the Lost Ark', :director => 'George Lucas',
-            :rating => 'PG', :release_date => '1981-06-12'}
+        post :create, params: {movie: {
+            title: 'Raiders of the Lost Ark', director: 'George Lucas',
+            rating: 'PG', release_date: '1981-06-12'}}
 
         get :index
         expect(response.body).to match(/Raiders of the Lost Ark/)
@@ -68,7 +68,7 @@ RSpec.describe MoviesController, type: :controller do
         get :index
         expect(response.body).to match(/Star Wars/)
 
-        delete :destroy, :id => 1
+        delete :destroy, params: {id: 1}
 
         get :index
         expect(response.body).to match(/Star Wars/)
@@ -81,9 +81,9 @@ RSpec.describe MoviesController, type: :controller do
         expect(response.body).to match(/Star Wars/)
         expect(response.body).not_to match(/Star Wars: Episode IV - A New Hope/)
 
-        post :update, :id => 1, :movie => {
-            :title => 'Star Wars: Episode IV - A New Hope', :director => 'George Lucas',
-            :rating => 'PG', :release_date => '1977-05-25'}
+        post :update, params: {id: 1, movie: {
+            title: 'Star Wars: Episode IV - A New Hope', director: 'George Lucas',
+            rating: 'PG', release_date: '1977-05-25'}}
 
         get :index
         expect(response.body).to match(/Star Wars: Episode IV - A New Hope/)
@@ -94,7 +94,7 @@ RSpec.describe MoviesController, type: :controller do
   describe 'Find movies with same director' do
     context 'the specified movie has director information' do
       it 'should find movies with same director' do
-        get :director_all_movies, :director => 'George Lucas'
+        get :director_all_movies, params: {director: 'George Lucas'}
 
         expect(response).to render_template(:director_all_movies)
         expect(response.status).to eq(200)
@@ -108,7 +108,7 @@ RSpec.describe MoviesController, type: :controller do
 
     context 'the specified movie has no director information' do
       it 'should not find any movies' do
-        get :director_all_movies, :director => nil
+        get :director_all_movies, params: {director: '', from: ''}
 
         expect(response).to render_template(:director_all_movies)
         expect(response.status).to eq(200)
